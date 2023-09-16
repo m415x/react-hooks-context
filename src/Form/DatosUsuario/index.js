@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
 import { validarEmail, validarPassword } from "./validaciones";
 
-const DatosUsuario = () => {
+const DatosUsuario = ({ updateStep }) => {
   const [email, setEmail] = useState({
     value: "",
     valid: null,
   });
-  const [password, setPassword] = useState({
-    value: "",
-    valid: null,
-  });
+  const [password, setPassword] = useState({ value: "", valid: null });
 
   return (
     <Box
       component="form"
-      autoComplete="off"
+      autocomplete="off"
       sx={{
         display: "flex",
         alignItems: "center",
@@ -27,6 +24,7 @@ const DatosUsuario = () => {
         if (email.valid && password.valid) {
           console.log("Siguiente formulario");
           console.log(email, password);
+          updateStep(1);
         } else {
           console.log("No hacer nada");
         }
@@ -40,7 +38,7 @@ const DatosUsuario = () => {
         type="email"
         error={email.valid === false}
         helperText={
-          !email.valid && "Ingresa un correo electrónico válido."
+          email.valid === false && "Ingresa un correo electrónico válido."
         }
         value={email.value}
         onChange={(input) => {
